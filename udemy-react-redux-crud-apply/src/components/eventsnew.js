@@ -10,6 +10,7 @@ class EventsNew extends Component {
         <div>
           <p>foo</p>
         </div>
+        <Link to="/">Home</Link>
       </React.Fragment>
     );
   }
