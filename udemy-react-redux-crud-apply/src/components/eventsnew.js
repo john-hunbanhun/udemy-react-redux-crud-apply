@@ -9,8 +9,8 @@ class EventsNew extends Component {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  renderField(field) {
-    const {
+ renderField(field) {
+     const {
       input,
       label,
       type,
@@ -31,7 +31,9 @@ class EventsNew extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit , pristine, submitting } = this.props;
+    console.log(this.props);
+    
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <div>
@@ -50,7 +52,7 @@ class EventsNew extends Component {
             component={this.renderField}
           />
           <div>
-            <input type="submit" value="submit" disabled={false} />
+            <input type="submit" value="submit" disabled={pristine || submitting} />
             <Link to="/">Home</Link>
           </div>
         </div>
