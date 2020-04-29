@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { postEvent } from "../Actions";
+import { getEvent, deleteEvent, putEvent } from "../Actions";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
 
-class EventsNew extends Component {
+class EventsShow extends Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onDeleteClick = this.onDeleteClick.bind(this);
   }
- renderField(field) {
-     const {
+  renderField(field) {
+    const {
       input,
       label,
       type,
@@ -28,10 +29,15 @@ class EventsNew extends Component {
     await this.props.postEvent(values);
     this.props.history.push("/");
   }
+  async onDeleteClick() {
+    const { id } = this.props.match.params;
+    await this.props.deleteEvent(id);
+    this.props.history.push("/");
+  }
 
   render() {
-    const { handleSubmit , pristine, submitting } = this.props;
-    
+    const { handleSubmit, pristine, submitting } = this.props;
+
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <div>
@@ -50,15 +56,22 @@ class EventsNew extends Component {
             component={this.renderField}
           />
           <div>
-            <input type="submit" value="submit" disabled={pristine || submitting} />
+            <input
+              type="submit"
+              value="submit"
+              disabled={pristine || submitting}
+            />
             <Link to="/">Home</Link>
+            <Link to="/" onClick={this.onDeleteClick}>
+              Delete
+            </Link>
           </div>
         </div>
       </form>
     );
   }
 }
-const mapDispatchProps = { postEvent };
+const mapDispatchProps = { deleteEvent };
 const validate = (values) => {
   const errors = {};
   if (!values.title) errors.title = "Enter Title";
@@ -68,4 +81,4 @@ const validate = (values) => {
 export default connect(
   null,
   mapDispatchProps
-)(reduxForm({ validate: validate, form: "eventNewform" })(EventsNew));
+)(reduxForm({ validate: validate, form: "eventShowform" })(EventsShow));
