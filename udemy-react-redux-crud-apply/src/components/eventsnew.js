@@ -30,7 +30,7 @@ class EventsNew extends Component {
   }
 
   render() {
-    const { handleSubmit , pristine, submitting } = this.props;
+    const { handleSubmit , pristine, submitting ,invalid } = this.props;
     
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -50,7 +50,7 @@ class EventsNew extends Component {
             component={this.renderField}
           />
           <div>
-            <input type="submit" value="submit" disabled={pristine || submitting} />
+            <input type="submit" value="submit" disabled={pristine || submitting || invalid} />
             <Link to="/">Home</Link>
           </div>
         </div>
@@ -64,6 +64,7 @@ const validate = (values) => {
   if (!values.title) errors.title = "Enter Title";
   if (!values.body) errors.body = "Enter body";
   return errors;
+
 };
 export default connect(
   null,
