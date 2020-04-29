@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk"; //MiddleWareに該当する
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { composeWithDevTools } from "redux-devtools-extension";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 import "./index.css";
 import reducer from "./Reducer";
@@ -20,6 +21,7 @@ const enhancer =
 const store = createStore(reducer, enhancer);
 
 ReactDOM.render(
+  <MuiThemeProvider>
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
@@ -29,8 +31,8 @@ ReactDOM.render(
         <Route path="/events" component={EventsIndex} />
       </Switch>
     </BrowserRouter>
-  </Provider>,
-
+  </Provider>
+  </MuiThemeProvider>,
   document.getElementById("root")
 );
 
